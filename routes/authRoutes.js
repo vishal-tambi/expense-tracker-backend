@@ -20,10 +20,16 @@ router.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1h", // Token expires in 1 hour
     });
 
-    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "Strict" });
+    // Conditionally set 'secure' flag based on environment
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: isProduction,  // Secure cookies only in production (use in HTTPS)
+      sameSite: "Strict",    // Ensures cookie is sent for same-site requests only
+    });
     res.status(200).json({ message: "Login successful", token });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
@@ -52,7 +58,7 @@ router.get("/check", async (req, res) => {
 
 // Logout user
 router.post("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token"); // Clear the JWT token cookie
   res.status(200).json({ message: "Logged out successfully" });
 });
 
