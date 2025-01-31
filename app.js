@@ -12,7 +12,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: 'https://expense-tracker-frontend-bay.vercel.app/login', credentials: true }));
+app.use(cors({ origin: 'https://expense-tracker-frontend-bay.vercel.app', credentials: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
