@@ -1,4 +1,3 @@
-const express = require('express');
 const { protect } = require('../middleware/authMiddleware');
 const { addExpense, getExpenses, updateExpense, deleteExpense } = require('../controllers/expenseController');
 
