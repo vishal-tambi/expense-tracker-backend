@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const authMiddleware = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
+const protect = (req, res, next) => {
+  const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).json({ message: 'Not authorized, no token' });
@@ -9,11 +9,11 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach the user data to the request object
+    req.userId = decoded.userId;
     next();
   } catch (err) {
-    res.status(401).json({ message: 'Not authorized, token invalid' });
+    return res.status(401).json({ message: 'Not authorized, token failed' });
   }
 };
 
-module.exports = authMiddleware;
+module.exports = { protect };
