@@ -11,12 +11,18 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || '*', // Adjust as needed
-    credentials: true,
-  })
-);
+
+
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://expense-tracker-frontend-delta-ten.vercel.app', 
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 
 // Routes
 app.use('/api/auth', authRoutes);
