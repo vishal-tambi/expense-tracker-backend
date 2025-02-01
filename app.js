@@ -12,7 +12,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: 'https://expense-tracker-frontend-delta-ten.vercel.app', credentials: true }));
+app.use(cors({ origin: 'https://expense-tracker-frontend-b7aj.onrender.com', credentials: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
